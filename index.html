@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNOPOS Restaurant Lead Filter</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0f1923;
+    color: #e8edf2;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #1e3148;
+  }
+
+  .logo {
+    background: #1a6ef5;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    padding: 8px 14px;
+    border-radius: 6px;
+  }
+
+  header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #e8edf2;
+  }
+
+  header p {
+    font-size: 13px;
+    color: #6b8cad;
+    margin-top: 2px;
+  }
+
+  .card {
+    background: #162232;
+    border: 1px solid #1e3148;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1a6ef5;
+    margin-bottom: 16px;
+  }
+
+  .drop-zone {
+    border: 2px dashed #1e3a5f;
+    border-radius: 10px;
+    padding: 40px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #0f1923;
+  }
+
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: #1a6ef5;
+    background: #111e2e;
+  }
+
+  .drop-zone svg { margin-bottom: 12px; opacity: 0.5; }
+  .drop-zone.drag-over svg { opacity: 1; }
+
+  .drop-zone h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #c5d5e8;
+    margin-bottom: 6px;
+  }
+
+  .drop-zone p {
+    font-size: 13px;
+    color: #4a6a8a;
+  }
+
+  .drop-zone span {
+    color: #1a6ef5;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  #fileInput { display: none; }
+
+  .file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .file-tag {
+    background: #0f1923;
+    border: 1px solid #1e3a5f;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #7eb3e0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .file-tag button {
+    background: none;
+    border: none;
+    color: #4a6a8a;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .file-tag button:hover { color: #e05555; }
+
+  .counties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .county-group h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #4a6a8a;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #1a6ef5;
+    cursor: pointer;
+  }
+
+  .checkbox-row label {
+    font-size: 14px;
+    color: #c5d5e8;
+    cursor: pointer;
+  }
+
+  .run-btn {
+    width: 100%;
+    background: #1a6ef5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+
+  .run-btn:hover { background: #1560d8; }
+  .run-btn:disabled { background: #1e3a5f; color: #4a6a8a; cursor: not-allowed; }
+
+  .status {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: none;
+  }
+
+  .status.running {
+    display: block;
+    background: #0f1e30;
+    border: 1px solid #1e3a5f;
+    color: #7eb3e0;
+  }
+
+  .status.success {
+    display: block;
+    background: #0d2218;
+    border: 1px solid #1a5c3a;
+    color: #4caf85;
+  }
+
+  .status.error {
+    display: block;
+    background: #2a0f0f;
+    border: 1px solid #5c1a1a;
+    color: #e05555;
+  }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  .results-table th {
+    background: #0f1923;
+    color: #4a6a8a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #1e3148;
+  }
+
+  .results-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1a2d42;
+    color: #c5d5e8;
+    vertical-align: top;
+  }
+
+  .results-table tr:hover td { background: #111e2e; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .badge-jax { background: #1a3a5c; color: #7eb3e0; }
+  .badge-sofla { background: #1a3a2a; color: #4caf85; }
+
+  .download-btn {
+    background: #0d2218;
+    border: 1px solid #1a5c3a;
+    color: #4caf85;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 16px;
+  }
+
+  .download-btn:hover { background: #1a5c3a; color: #fff; }
+
+  .summary-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .summary-stat {
+    background: #0f1923;
+    border: 1px solid #1e3148;
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .summary-stat .num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a6ef5;
+    line-height: 1;
+  }
+
+  .summary-stat .lbl {
+    font-size: 11px;
+    color: #4a6a8a;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  .instructions {
+    font-size: 13px;
+    color: #6b8cad;
+    line-height: 1.7;
+  }
+
+  .instructions ol { padding-left: 20px; }
+  .instructions li { margin-bottom: 6px; }
+  .instructions code {
+    background: #0f1923;
+    border: 1px solid #1e3148;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #7eb3e0;
+    font-size: 12px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #1e3148;
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo">UNOPOS</div>
+    <div>
+      <h1>Restaurant Lead Filter</h1>
+      <p>Sunbiz Daily Fictitious Name Processor — Broward, Palm Beach &amp; Jacksonville</p>
+    </div>
+  </header>
+
+  <!-- Instructions -->
+  <div class="card">
+    <div class="card-title">How to Use This Tool</div>
+    <div class="instructions">
+      <ol>
+        <li>Log into <strong>sftp.floridados.gov</strong> → Public → doc → fic</li>
+        <li>Download today's file — it looks like <code>20260622f.txt</code> (only files ending in <code>f.txt</code>)</li>
+        <li>Drag and drop the file below (you can drop multiple days at once)</li>
+        <li>Click <strong>Run Filter</strong> — results appear instantly</li>
+        <li>Click <strong>Download CSV</strong> to save the leads file</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- File Drop -->
+  <div class="card">
+    <div class="card-title">Step 1 — Drop Your Files</div>
+    <div class="drop-zone" id="dropZone">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1a6ef5" stroke-width="1.5">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <h3>Drag &amp; drop Sunbiz files here</h3>
+      <p>or <span onclick="document.getElementById('fileInput').click()">browse to select</span></p>
+      <input type="file" id="fileInput" multiple accept=".txt">
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+
+  <!-- County Selection -->
+  <div class="card">
+    <div class="card-title">Step 2 — Select Target Counties</div>
+    <div class="counties-grid">
+      <div class="county-group">
+        <h4>South Florida</h4>
+        <div class="checkbox-row"><input type="checkbox" id="broward" checked><label for="broward">Broward</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="palmbeach" checked><label for="palmbeach">Palm Beach</label></div>
+      </div>
+      <div class="county-group">
+        <h4>Jacksonville Area</h4>
+        <div class="checkbox-row"><input type="checkbox" id="duval" checked><label for="duval">Duval (Jacksonville)</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="clay" checked><label for="clay">Clay (Orange Park)</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="stjohns" checked><label for="stjohns">St. Johns (St. Augustine)</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="nassau" checked><label for="nassau">Nassau (Fernandina Beach)</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="baker" checked><label for="baker">Baker (Macclenny)</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Run -->
+  <div class="card">
+    <div class="card-title">Step 3 — Run the Filter</div>
+    <button class="run-btn" id="runBtn" onclick="runFilter()" disabled>Run Filter</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <!-- Results -->
+  <div class="card" id="resultsCard" style="display:none">
+    <div class="card-title">Results</div>
+    <div class="summary-row" id="summaryRow"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+      <button class="download-btn" onclick="downloadCSV('all')" id="dlAll">⬇ Download All Leads</button>
+      <button class="download-btn" onclick="downloadCSV('SoFla')" id="dlSoFla" style="border-color:#1a5c3a;color:#4caf85">⬇ South Florida Only</button>
+      <button class="download-btn" onclick="downloadCSV('JAX')" id="dlJax" style="border-color:#1a3a5c;color:#7eb3e0">⬇ Jacksonville Only</button>
+    </div>
+    <hr class="divider">
+    <div style="overflow-x:auto">
+      <table class="results-table" id="resultsTable">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Business Name</th>
+            <th>County</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Zip</th>
+            <th>Filed</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const RESTAURANT_KEYWORDS = [
+  'restaurant','cafe','café','kitchen','grill','grille','bistro','eatery',
+  'pizzeria','pizza','sushi','taco','tacos','taqueria','cantina','bbq',
+  'barbecue','burger','burgers','wings','diner','lounge','gastropub',
+  'pub ','brasserie','trattoria','steakhouse','chophouse','smokehouse',
+  'seafood','ramen','pho','noodle','sandwich','subs','deli','bakery',
+  'pastry','brunch','catering','oyster','ceviche','empanada','juice bar',
+  'smoothie','gelato','crepe','boba','bubble tea','coffee','espresso',
+  'tapas','shawarma','kebab','falafel','buffet','rotisserie','cocina',
+  'comida','mariscos','panaderia','fritanga','food hall','food truck',
+  'wing ','dining','churrasco','asadero','pollo','carnitas','arepas',
+  'food','eat','cook','brew','roast','smoke','steak','chick'
+];
+
+const EXCLUSION_KEYWORDS = [
+  'realty','real estate','insurance','mortgage','title company','law ',
+  'legal','attorney','accounting','staffing','recruiting','logistics',
+  'transport','trucking','cleaning','janitorial','landscaping','lawn',
+  'pest control','roofing','plumbing','electric','hvac','flooring',
+  'painting','concrete','construction','contractors','property management',
+  'backyard','pool service','auto ','car wash','mechanic','towing',
+  'nail ','hair ','barber','tattoo','daycare','tutoring','printing',
+  'leather','beauty','salon',' spa','lash','brow ','waxing','facial',
+  'makeup','cosmetic','blow dry','blowout','threading','med spa','medspa',
+  'photo','appliance','bathroom','marine art','boat drawing',
+  'kitchen design','kitchen & bath','kitchen and bath','farm','farms',
+  'home design','publication','publishing','consulting','heating',
+  'air ','imagery','wraps','golf','ministries','ministry','vape',
+  'kicks','sewing'
+];
+
+const COUNTY_MAP = {
+  'broward':   { label: 'Broward',   region: 'SoFla', id: 'broward' },
+  'palm beach':{ label: 'Palm Beach',region: 'SoFla', id: 'palmbeach' },
+  'duval':     { label: 'Duval',     region: 'JAX',   id: 'duval' },
+  'clay':      { label: 'Clay',      region: 'JAX',   id: 'clay' },
+  'st. johns': { label: 'St. Johns', region: 'JAX',   id: 'stjohns' },
+  'nassau':    { label: 'Nassau',    region: 'JAX',   id: 'nassau' },
+  'baker':     { label: 'Baker',     region: 'JAX',   id: 'baker' },
+};
+
+let loadedFiles = [];
+let lastResults = [];
+
+// Drop zone
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => addFiles(Array.from(fileInput.files)));
+
+function addFiles(files) {
+  const valid = files.filter(f => f.name.match(/^\d{8}f\.txt$/i) || f.name.endsWith('.txt'));
+  valid.forEach(f => {
+    if (!loadedFiles.find(x => x.name === f.name)) loadedFiles.push(f);
+  });
+  renderFileTags();
+  document.getElementById('runBtn').disabled = loadedFiles.length === 0;
+}
+
+function removeFile(name) {
+  loadedFiles = loadedFiles.filter(f => f.name !== name);
+  renderFileTags();
+  document.getElementById('runBtn').disabled = loadedFiles.length === 0;
+}
+
+function renderFileTags() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = loadedFiles.map(f =>
+    `<div class="file-tag">📄 ${f.name}<button onclick="removeFile('${f.name}')" title="Remove">×</button></div>`
+  ).join('');
+}
+
+function getEnabledCounties() {
+  return Object.entries(COUNTY_MAP)
+    .filter(([k, v]) => document.getElementById(v.id).checked)
+    .map(([k, v]) => ({ key: k, ...v }));
+}
+
+function isRestaurant(name) {
+  const n = name.toLowerCase();
+  if (EXCLUSION_KEYWORDS.some(kw => n.includes(kw))) return false;
+  return RESTAURANT_KEYWORDS.some(kw => n.includes(kw));
+}
+
+function matchCounty(countyRaw, enabled) {
+  const c = countyRaw.toLowerCase().trim();
+  return enabled.find(e => c.includes(e.key));
+}
+
+function extractOwner(line) {
+  const sub = line.slice(340);
+  const m = sub.match(/N[GPL]\d{11}([A-Z][A-Z0-9\s&,.'\-]{2,49}?)\s{3,}[CLP]/);
+  return m ? m[1].trim() : '';
+}
+
+function formatDate(raw) {
+  if (raw.length === 8) return `${raw.slice(0,2)}/${raw.slice(2,4)}/${raw.slice(4,8)}`;
+  return raw;
+}
+
+function parseLine(line, enabledCounties) {
+  if (line.length < 400) return null;
+  const ficNum   = line.slice(0, 12).trim();
+  const bizName  = line.slice(12, 112).trim();
+  const county   = line.slice(204, 216).trim();
+  const address  = line.slice(216, 291).trim();
+  const city     = line.slice(291, 316).trim();
+  const state    = line.slice(324, 326).trim();
+  const zip      = line.slice(326, 331).trim();
+  const fileDate = formatDate(line.slice(338, 346).trim());
+
+  const matched = matchCounty(county, enabledCounties);
+  if (!matched) return null;
+  if (!isRestaurant(bizName)) return null;
+
+  return {
+    fic: ficNum,
+    name: bizName,
+    region: matched.region,
+    county: matched.label,
+    address, city, state, zip, fileDate,
+    owner: extractOwner(line),
+  };
+}
+
+async function runFilter() {
+  const btn = document.getElementById('runBtn');
+  const status = document.getElementById('status');
+
+  if (loadedFiles.length === 0) return;
+
+  btn.disabled = true;
+  status.className = 'status running';
+  status.textContent = `Processing ${loadedFiles.length} file(s)...`;
+
+  const enabledCounties = getEnabledCounties();
+  const seen = new Set();
+  const results = [];
+
+  for (const file of loadedFiles) {
+    const text = await file.text();
+    const lines = text.split('\n');
+    for (const line of lines) {
+      const lead = parseLine(line, enabledCounties);
+      if (lead && !seen.has(lead.fic)) {
+        seen.add(lead.fic);
+        results.push(lead);
+      }
+    }
+  }
+
+  lastResults = results;
+
+  if (results.length === 0) {
+    status.className = 'status error';
+    status.textContent = 'No restaurant leads found in target counties for these files.';
+    btn.disabled = false;
+    return;
+  }
+
+  status.className = 'status success';
+  status.textContent = `✓ Found ${results.length} restaurant leads across ${loadedFiles.length} file(s).`;
+
+  renderResults(results);
+  btn.disabled = false;
+}
+
+function renderResults(results) {
+  const card = document.getElementById('resultsCard');
+  const tbody = document.getElementById('resultsBody');
+  const summaryRow = document.getElementById('summaryRow');
+  card.style.display = 'block';
+
+  // Summary stats
+  const byCounty = {};
+  results.forEach(r => { byCounty[r.county] = (byCounty[r.county] || 0) + 1; });
+  const sofla = results.filter(r => r.region === 'SoFla').length;
+  const jax   = results.filter(r => r.region === 'JAX').length;
+
+  summaryRow.innerHTML = `
+    <div class="summary-stat"><div class="num">${results.length}</div><div class="lbl">Total Leads</div></div>
+    <div class="summary-stat"><div class="num">${sofla}</div><div class="lbl">South Florida</div></div>
+    <div class="summary-stat"><div class="num">${jax}</div><div class="lbl">Jacksonville</div></div>
+    ${Object.entries(byCounty).map(([c,n]) => `<div class="summary-stat"><div class="num">${n}</div><div class="lbl">${c}</div></div>`).join('')}
+  `;
+
+  // Table
+  tbody.innerHTML = results.map(r => `
+    <tr>
+      <td><span class="badge badge-${r.region.toLowerCase()}">${r.region}</span></td>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.county}</td>
+      <td>${r.city}</td>
+      <td style="font-size:12px;color:#6b8cad">${r.address}</td>
+      <td>${r.zip}</td>
+      <td>${r.fileDate}</td>
+      <td style="font-size:12px;color:#6b8cad">${r.owner}</td>
+    </tr>
+  `).join('');
+
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+function downloadCSV(region) {
+  if (lastResults.length === 0) return;
+
+  const filtered = region === 'all' ? lastResults : lastResults.filter(r => r.region === region);
+  if (filtered.length === 0) {
+    alert(`No ${region} leads found.`);
+    return;
+  }
+
+  const headers = ['FIC_Number','Business_Name','Region','County','Address','City','State','Zip','File_Date','Owner_Entity'];
+  const rows = filtered.map(r => [
+    r.fic, r.name, r.region, r.county, r.address, r.city, r.state, r.zip, r.fileDate, r.owner
+  ].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
+
+  const csv = [headers.join(','), ...rows].join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+
+  const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
+  const suffix = region === 'all' ? 'ALL' : region;
+  a.href = url;
+  a.download = `UNOPOS_restaurant_leads_${suffix}_${today}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
