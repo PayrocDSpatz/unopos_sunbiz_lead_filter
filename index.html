@@ -742,7 +742,7 @@ async function fetchLeadInfo(lead) {
 
 Research the following newly registered Florida business and return a JSON object with these exact fields:
 - phone: the business phone number (format: (XXX) XXX-XXXX), or "" if not found
-- website: the business website URL (e.g. "example.com"), or "" if not found  
+- website: the business website URL (e.g. "example.com"), or "" if not found
 - businessType: a short label, one of: "Restaurant / QSR", "Restaurant / Full Service", "Restaurant / Cafe", "Retail / Smoke Shop", "Retail / Vape Shop", "Retail / Other", "Bar / Lounge", "Food Truck", or your best short description
 - notes: 1-2 sentences max. Include: franchise vs. independent, owner name if known, whether the business appears brand new or is an existing business filing a new DBA, any key detail useful for a POS salesperson making first contact.
 
@@ -753,30 +753,22 @@ Business details:
 - Owner/Entity: ${lead.owner}
 - Sunbiz Filing Date: ${lead.fileDate}
 
-IMPORTANT: Search the web for this specific business at this specific address. Return ONLY a valid JSON object, no markdown, no explanation, no preamble.`;
+Search the web for this specific business at this specific address. Return ONLY a valid JSON object, no markdown, no explanation, no preamble.`;
 
   const response = await fetch('/api/enrich', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: prompt }]
-    })
+    body: JSON.stringify({ prompt, model: 'claude-sonnet-4-6', max_tokens: 1024 })
   });
 
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || `API error: ${response.status}`);
+  }
+
   const data = await response.json();
-
-  // Extract the final text block (after any tool use)
-  const textBlocks = data.content.filter(b => b.type === 'text');
-  if (!textBlocks.length) throw new Error('No text in response');
-  const raw = textBlocks[textBlocks.length - 1].text.trim();
-
-  // Strip markdown fences if present
-  const clean = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/,'').trim();
-  return JSON.parse(clean);
+  if (!data.result) throw new Error('No result from server');
+  return JSON.parse(data.result);
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
