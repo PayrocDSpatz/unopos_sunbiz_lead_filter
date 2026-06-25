@@ -15,7 +15,7 @@
     padding: 32px 24px;
   }
 
-  .container { max-width: 980px; margin: 0 auto; }
+  .container { max-width: 860px; margin: 0 auto; }
 
   header {
     display: flex;
@@ -36,8 +36,17 @@
     border-radius: 6px;
   }
 
-  header h1 { font-size: 20px; font-weight: 600; color: #e8edf2; }
-  header p { font-size: 13px; color: #6b8cad; margin-top: 2px; }
+  header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #e8edf2;
+  }
+
+  header p {
+    font-size: 13px;
+    color: #6b8cad;
+    margin-top: 2px;
+  }
 
   .card {
     background: #162232;
@@ -66,15 +75,40 @@
     background: #0f1923;
   }
 
-  .drop-zone:hover, .drop-zone.drag-over { border-color: #1a6ef5; background: #111e2e; }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: #1a6ef5;
+    background: #111e2e;
+  }
+
   .drop-zone svg { margin-bottom: 12px; opacity: 0.5; }
   .drop-zone.drag-over svg { opacity: 1; }
-  .drop-zone h3 { font-size: 15px; font-weight: 600; color: #c5d5e8; margin-bottom: 6px; }
-  .drop-zone p { font-size: 13px; color: #4a6a8a; }
-  .drop-zone span { color: #1a6ef5; cursor: pointer; text-decoration: underline; }
+
+  .drop-zone h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #c5d5e8;
+    margin-bottom: 6px;
+  }
+
+  .drop-zone p {
+    font-size: 13px;
+    color: #4a6a8a;
+  }
+
+  .drop-zone span {
+    color: #1a6ef5;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   #fileInput { display: none; }
 
-  .file-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
 
   .file-tag {
     background: #0f1923;
@@ -88,15 +122,52 @@
     gap: 6px;
   }
 
-  .file-tag button { background: none; border: none; color: #4a6a8a; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; }
+  .file-tag button {
+    background: none;
+    border: none;
+    color: #4a6a8a;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1;
+  }
+
   .file-tag button:hover { color: #e05555; }
 
-  .counties-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .county-group h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #4a6a8a; margin-bottom: 10px; }
+  .counties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
 
-  .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #1a6ef5; cursor: pointer; }
-  .checkbox-row label { font-size: 14px; color: #c5d5e8; cursor: pointer; }
+  .county-group h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #4a6a8a;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #1a6ef5;
+    cursor: pointer;
+  }
+
+  .checkbox-row label {
+    font-size: 14px;
+    color: #c5d5e8;
+    cursor: pointer;
+  }
 
   .run-btn {
     width: 100%;
@@ -115,25 +186,6 @@
   .run-btn:hover { background: #1560d8; }
   .run-btn:disabled { background: #1e3a5f; color: #4a6a8a; cursor: not-allowed; }
 
-  /* Enrich button — distinct green */
-  .enrich-btn {
-    width: 100%;
-    background: #0d6b3a;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: background 0.2s;
-    margin-top: 0;
-  }
-
-  .enrich-btn:hover { background: #0a5430; }
-  .enrich-btn:disabled { background: #1e3a5f; color: #4a6a8a; cursor: not-allowed; }
-
   .status {
     margin-top: 16px;
     padding: 12px 16px;
@@ -142,17 +194,26 @@
     display: none;
   }
 
-  .status.running { display: block; background: #0f1e30; border: 1px solid #1e3a5f; color: #7eb3e0; }
-  .status.success { display: block; background: #0d2218; border: 1px solid #1a5c3a; color: #4caf85; }
-  .status.error   { display: block; background: #2a0f0f; border: 1px solid #5c1a1a; color: #e05555; }
+  .status.running {
+    display: block;
+    background: #0f1e30;
+    border: 1px solid #1e3a5f;
+    color: #7eb3e0;
+  }
 
-  /* Progress bar */
-  .progress-wrap { margin-top: 14px; background: #0f1923; border-radius: 6px; height: 6px; overflow: hidden; display: none; }
-  .progress-wrap.visible { display: block; }
-  .progress-bar { height: 100%; background: #4caf85; border-radius: 6px; transition: width 0.3s ease; width: 0%; }
+  .status.success {
+    display: block;
+    background: #0d2218;
+    border: 1px solid #1a5c3a;
+    color: #4caf85;
+  }
 
-  .progress-label { font-size: 12px; color: #4a6a8a; margin-top: 6px; display: none; }
-  .progress-label.visible { display: block; }
+  .status.error {
+    display: block;
+    background: #2a0f0f;
+    border: 1px solid #5c1a1a;
+    color: #e05555;
+  }
 
   .results-table {
     width: 100%;
@@ -170,7 +231,6 @@
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid #1e3148;
-    white-space: nowrap;
   }
 
   .results-table td {
@@ -182,32 +242,16 @@
 
   .results-table tr:hover td { background: #111e2e; }
 
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-  .badge-jax   { background: #1a3a5c; color: #7eb3e0; }
-  .badge-sofla { background: #1a3a2a; color: #4caf85; }
-
-  /* Enrichment cell states */
-  .enrich-pending  { color: #4a6a8a; font-style: italic; font-size: 12px; }
-  .enrich-loading  { color: #7eb3e0; font-size: 12px; }
-  .enrich-done     { color: #c5d5e8; font-size: 12px; }
-  .enrich-missing  { color: #b0762a; font-size: 12px; }
-  .enrich-error    { color: #e05555; font-size: 12px; }
-
-  .phone-val   { color: #4caf85; font-weight: 600; }
-  .website-val { color: #7eb3e0; }
-  .notes-val   { color: #9bb8d4; line-height: 1.5; }
-
-  .spinner {
+  .badge {
     display: inline-block;
-    width: 10px; height: 10px;
-    border: 2px solid #1e3a5f;
-    border-top-color: #7eb3e0;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin-right: 5px;
-    vertical-align: middle;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .badge-jax { background: #1a3a5c; color: #7eb3e0; }
+  .badge-sofla { background: #1a3a2a; color: #4caf85; }
 
   .download-btn {
     background: #0d2218;
@@ -223,9 +267,13 @@
   }
 
   .download-btn:hover { background: #1a5c3a; color: #fff; }
-  .download-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .summary-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .summary-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
 
   .summary-stat {
     background: #0f1923;
@@ -236,40 +284,42 @@
     min-width: 100px;
   }
 
-  .summary-stat .num { font-size: 26px; font-weight: 800; color: #1a6ef5; line-height: 1; }
-  .summary-stat .lbl { font-size: 11px; color: #4a6a8a; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.6px; }
-
-  .instructions { font-size: 13px; color: #6b8cad; line-height: 1.7; }
-  .instructions ol { padding-left: 20px; }
-  .instructions li { margin-bottom: 6px; }
-  .instructions code { background: #0f1923; border: 1px solid #1e3148; padding: 1px 6px; border-radius: 4px; color: #7eb3e0; font-size: 12px; }
-
-  .divider { border: none; border-top: 1px solid #1e3148; margin: 20px 0; }
-
-  .enrich-info {
-    background: #0f1e30;
-    border: 1px solid #1e3a5f;
-    border-radius: 8px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: #6b8cad;
-    line-height: 1.6;
-    margin-bottom: 16px;
+  .summary-stat .num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a6ef5;
+    line-height: 1;
   }
 
-  .enrich-info strong { color: #7eb3e0; }
+  .summary-stat .lbl {
+    font-size: 11px;
+    color: #4a6a8a;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
 
-  .tag-new {
-    display: inline-block;
-    background: #0d6b3a;
-    color: #4caf85;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 2px 7px;
+  .instructions {
+    font-size: 13px;
+    color: #6b8cad;
+    line-height: 1.7;
+  }
+
+  .instructions ol { padding-left: 20px; }
+  .instructions li { margin-bottom: 6px; }
+  .instructions code {
+    background: #0f1923;
+    border: 1px solid #1e3148;
+    padding: 1px 6px;
     border-radius: 4px;
-    vertical-align: middle;
-    margin-left: 8px;
+    color: #7eb3e0;
+    font-size: 12px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #1e3148;
+    margin: 20px 0;
   }
 </style>
 </head>
@@ -293,7 +343,6 @@
         <li>Download today's file — it looks like <code>20260622f.txt</code> (only files ending in <code>f.txt</code>)</li>
         <li>Drag and drop the file below (you can drop multiple days at once)</li>
         <li>Click <strong>Run Filter</strong> — results appear instantly</li>
-        <li>Optionally click <strong>Enrich Leads with AI</strong> to auto-research phone, website &amp; notes for each lead</li>
         <li>Click <strong>Download CSV</strong> to save the leads file</li>
       </ol>
     </div>
@@ -342,18 +391,6 @@
     <div class="status" id="status"></div>
   </div>
 
-  <!-- Enrich -->
-  <div class="card" id="enrichCard" style="display:none">
-    <div class="card-title">Step 4 — Enrich Leads with AI <span class="tag-new">NEW</span></div>
-    <div class="enrich-info">
-      Uses <strong>Claude AI</strong> to research each lead — finds phone numbers, websites, confirms addresses, identifies business type, and flags franchise vs. independent. Runs one lead at a time to stay under rate limits. Each lead takes ~10–15 seconds.
-    </div>
-    <button class="enrich-btn" id="enrichBtn" onclick="enrichLeads()">🔍 Enrich Leads with AI</button>
-    <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
-    <div class="progress-label" id="progressLabel"></div>
-    <div class="status" id="enrichStatus"></div>
-  </div>
-
   <!-- Results -->
   <div class="card" id="resultsCard" style="display:none">
     <div class="card-title">Results</div>
@@ -376,10 +413,6 @@
             <th>Zip</th>
             <th>Filed</th>
             <th>Owner</th>
-            <th id="phoneHeader" style="display:none">Phone</th>
-            <th id="websiteHeader" style="display:none">Website</th>
-            <th id="typeHeader" style="display:none">Type</th>
-            <th id="notesHeader" style="display:none">Notes</th>
           </tr>
         </thead>
         <tbody id="resultsBody"></tbody>
@@ -433,9 +466,8 @@ const COUNTY_MAP = {
 
 let loadedFiles = [];
 let lastResults = [];
-let enrichmentDone = false;
 
-// ── Drop zone ──────────────────────────────────────────────
+// Drop zone
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 
@@ -450,7 +482,9 @@ fileInput.addEventListener('change', () => addFiles(Array.from(fileInput.files))
 
 function addFiles(files) {
   const valid = files.filter(f => f.name.match(/^\d{8}f\.txt$/i) || f.name.endsWith('.txt'));
-  valid.forEach(f => { if (!loadedFiles.find(x => x.name === f.name)) loadedFiles.push(f); });
+  valid.forEach(f => {
+    if (!loadedFiles.find(x => x.name === f.name)) loadedFiles.push(f);
+  });
   renderFileTags();
   document.getElementById('runBtn').disabled = loadedFiles.length === 0;
 }
@@ -468,7 +502,6 @@ function renderFileTags() {
   ).join('');
 }
 
-// ── Parsing ────────────────────────────────────────────────
 function getEnabledCounties() {
   return Object.entries(COUNTY_MAP)
     .filter(([k, v]) => document.getElementById(v.id).checked)
@@ -488,7 +521,7 @@ function matchCounty(countyRaw, enabled) {
 
 function extractOwner(line) {
   const sub = line.slice(340);
-  const m = sub.match(/N[GPL]\d{11}([A-Z][A-Z0-9\s&,.'\\-]{2,49}?)\s{3,}[CLP]/);
+  const m = sub.match(/N[GPL]\d{11}([A-Z][A-Z0-9\s&,.'\-]{2,49}?)\s{3,}[CLP]/);
   return m ? m[1].trim() : '';
 }
 
@@ -519,16 +552,13 @@ function parseLine(line, enabledCounties) {
     county: matched.label,
     address, city, state, zip, fileDate,
     owner: extractOwner(line),
-    // enrichment fields (populated later)
-    phone: null, website: null, businessType: null, notes: null,
-    enriched: false,
   };
 }
 
-// ── Filter ─────────────────────────────────────────────────
 async function runFilter() {
   const btn = document.getElementById('runBtn');
   const status = document.getElementById('status');
+
   if (loadedFiles.length === 0) return;
 
   btn.disabled = true;
@@ -552,7 +582,6 @@ async function runFilter() {
   }
 
   lastResults = results;
-  enrichmentDone = false;
 
   if (results.length === 0) {
     status.className = 'status error';
@@ -562,238 +591,67 @@ async function runFilter() {
   }
 
   status.className = 'status success';
-  status.textContent = `✓ Found ${results.length} restaurant lead${results.length !== 1 ? 's' : ''} across ${loadedFiles.length} file(s).`;
+  status.textContent = `✓ Found ${results.length} restaurant leads across ${loadedFiles.length} file(s).`;
 
-  renderResults(results, false);
-
-  // Show enrich card
-  document.getElementById('enrichCard').style.display = 'block';
-  document.getElementById('enrichBtn').disabled = false;
-  document.getElementById('enrichStatus').className = 'status';
-  document.getElementById('progressWrap').classList.remove('visible');
-  document.getElementById('progressLabel').classList.remove('visible');
-
+  renderResults(results);
   btn.disabled = false;
 }
 
-// ── Render results ─────────────────────────────────────────
-function renderResults(results, showEnrichCols) {
+function renderResults(results) {
   const card = document.getElementById('resultsCard');
   const tbody = document.getElementById('resultsBody');
   const summaryRow = document.getElementById('summaryRow');
   card.style.display = 'block';
 
+  // Summary stats
   const byCounty = {};
   results.forEach(r => { byCounty[r.county] = (byCounty[r.county] || 0) + 1; });
   const sofla = results.filter(r => r.region === 'SoFla').length;
   const jax   = results.filter(r => r.region === 'JAX').length;
-  const enrichedCount = results.filter(r => r.enriched).length;
 
   summaryRow.innerHTML = `
     <div class="summary-stat"><div class="num">${results.length}</div><div class="lbl">Total Leads</div></div>
     <div class="summary-stat"><div class="num">${sofla}</div><div class="lbl">South Florida</div></div>
     <div class="summary-stat"><div class="num">${jax}</div><div class="lbl">Jacksonville</div></div>
-    ${showEnrichCols ? `<div class="summary-stat"><div class="num" style="color:#4caf85">${enrichedCount}</div><div class="lbl">Enriched</div></div>` : ''}
     ${Object.entries(byCounty).map(([c,n]) => `<div class="summary-stat"><div class="num">${n}</div><div class="lbl">${c}</div></div>`).join('')}
   `;
 
-  // Toggle enrich columns
-  ['phoneHeader','websiteHeader','typeHeader','notesHeader'].forEach(id => {
-    document.getElementById(id).style.display = showEnrichCols ? '' : 'none';
-  });
+  // Table
+  tbody.innerHTML = results.map(r => `
+    <tr>
+      <td><span class="badge badge-${r.region.toLowerCase()}">${r.region}</span></td>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.county}</td>
+      <td>${r.city}</td>
+      <td style="font-size:12px;color:#6b8cad">${r.address}</td>
+      <td>${r.zip}</td>
+      <td>${r.fileDate}</td>
+      <td style="font-size:12px;color:#6b8cad">${r.owner}</td>
+    </tr>
+  `).join('');
 
-  tbody.innerHTML = results.map((r, i) => {
-    const enrichCols = showEnrichCols ? `
-      <td id="phone-${i}">${renderEnrichCell(r, 'phone', i)}</td>
-      <td id="website-${i}">${renderEnrichCell(r, 'website', i)}</td>
-      <td id="type-${i}">${renderEnrichCell(r, 'businessType', i)}</td>
-      <td id="notes-${i}" style="max-width:260px">${renderEnrichCell(r, 'notes', i)}</td>
-    ` : '';
-    return `
-      <tr>
-        <td><span class="badge badge-${r.region.toLowerCase()}">${r.region}</span></td>
-        <td><strong>${r.name}</strong></td>
-        <td>${r.county}</td>
-        <td>${r.city}</td>
-        <td style="font-size:12px;color:#6b8cad">${r.address}</td>
-        <td>${r.zip}</td>
-        <td>${r.fileDate}</td>
-        <td style="font-size:12px;color:#6b8cad">${r.owner}</td>
-        ${enrichCols}
-      </tr>
-    `;
-  }).join('');
-
-  if (!showEnrichCols) card.scrollIntoView({ behavior: 'smooth' });
+  card.scrollIntoView({ behavior: 'smooth' });
 }
 
-function renderEnrichCell(r, field, i) {
-  if (!r.enriched && r[field] === null) {
-    return `<span class="enrich-pending">—</span>`;
-  }
-  if (r[field] === 'LOADING') {
-    return `<span class="enrich-loading"><span class="spinner"></span>searching…</span>`;
-  }
-  const val = r[field];
-  if (!val || val === 'N/A' || val === '') {
-    return `<span class="enrich-missing">Not found</span>`;
-  }
-  if (field === 'phone') return `<span class="enrich-done phone-val">${val}</span>`;
-  if (field === 'website') return `<span class="enrich-done website-val">${val}</span>`;
-  if (field === 'notes') return `<span class="enrich-done notes-val">${val}</span>`;
-  return `<span class="enrich-done">${val}</span>`;
-}
-
-// ── Enrichment ─────────────────────────────────────────────
-async function enrichLeads() {
-  if (lastResults.length === 0) return;
-
-  const btn = document.getElementById('enrichBtn');
-  const enrichStatus = document.getElementById('enrichStatus');
-  const progressWrap = document.getElementById('progressWrap');
-  const progressBar = document.getElementById('progressBar');
-  const progressLabel = document.getElementById('progressLabel');
-
-  btn.disabled = true;
-  enrichStatus.className = 'status running';
-  enrichStatus.textContent = `Starting enrichment for ${lastResults.length} leads…`;
-  progressWrap.classList.add('visible');
-  progressLabel.classList.add('visible');
-  progressBar.style.width = '0%';
-
-  // Show enrich columns immediately
-  ['phoneHeader','websiteHeader','typeHeader','notesHeader'].forEach(id => {
-    document.getElementById(id).style.display = '';
-  });
-
-  // Mark all as loading placeholders in the table
-  lastResults.forEach((r, i) => {
-    r.phone = 'LOADING'; r.website = 'LOADING'; r.businessType = 'LOADING'; r.notes = 'LOADING';
-  });
-  renderResults(lastResults, true);
-
-  let completed = 0;
-  const total = lastResults.length;
-
-  for (let i = 0; i < lastResults.length; i++) {
-    const lead = lastResults[i];
-    progressLabel.textContent = `Researching ${i + 1} of ${total}: ${lead.name}`;
-
-    // Set this one to loading, others already showing placeholders
-    updateLeadCells(i, { phone: 'LOADING', website: 'LOADING', businessType: 'LOADING', notes: 'LOADING' });
-
-    try {
-      const info = await fetchLeadInfo(lead);
-      lead.phone        = info.phone        || '';
-      lead.website      = info.website      || '';
-      lead.businessType = info.businessType || '';
-      lead.notes        = info.notes        || '';
-      lead.enriched     = true;
-    } catch (err) {
-      lead.phone = lead.website = lead.businessType = '';
-      lead.notes = 'Enrichment error';
-      lead.enriched = true;
-    }
-
-    updateLeadCells(i, lead);
-    completed++;
-    progressBar.style.width = `${Math.round((completed / total) * 100)}%`;
-
-    // Small delay to avoid hammering the API
-    if (i < lastResults.length - 1) await sleep(800);
-  }
-
-  enrichmentDone = true;
-  enrichStatus.className = 'status success';
-  enrichStatus.textContent = `✓ Enrichment complete — ${completed} lead${completed !== 1 ? 's' : ''} researched.`;
-  progressLabel.textContent = 'Done.';
-
-  // Re-render summary to show enriched count
-  renderSummary(lastResults);
-}
-
-function renderSummary(results) {
-  const summaryRow = document.getElementById('summaryRow');
-  const byCounty = {};
-  results.forEach(r => { byCounty[r.county] = (byCounty[r.county] || 0) + 1; });
-  const sofla = results.filter(r => r.region === 'SoFla').length;
-  const jax   = results.filter(r => r.region === 'JAX').length;
-  const enrichedCount = results.filter(r => r.enriched).length;
-
-  summaryRow.innerHTML = `
-    <div class="summary-stat"><div class="num">${results.length}</div><div class="lbl">Total Leads</div></div>
-    <div class="summary-stat"><div class="num">${sofla}</div><div class="lbl">South Florida</div></div>
-    <div class="summary-stat"><div class="num">${jax}</div><div class="lbl">Jacksonville</div></div>
-    <div class="summary-stat"><div class="num" style="color:#4caf85">${enrichedCount}</div><div class="lbl">Enriched</div></div>
-    ${Object.entries(byCounty).map(([c,n]) => `<div class="summary-stat"><div class="num">${n}</div><div class="lbl">${c}</div></div>`).join('')}
-  `;
-}
-
-function updateLeadCells(i, data) {
-  const fields = ['phone', 'website', 'businessType', 'notes'];
-  fields.forEach(field => {
-    const cell = document.getElementById(`${field}-${i}`);
-    if (cell) cell.innerHTML = renderEnrichCell(data, field, i);
-  });
-}
-
-async function fetchLeadInfo(lead) {
-  const prompt = `You are a business research assistant for UNOPOS, a point-of-sale company targeting new restaurant and retail businesses in Florida.
-
-Research the following newly registered Florida business and return a JSON object with these exact fields:
-- phone: the business phone number (format: (XXX) XXX-XXXX), or "" if not found
-- website: the business website URL (e.g. "example.com"), or "" if not found
-- businessType: a short label, one of: "Restaurant / QSR", "Restaurant / Full Service", "Restaurant / Cafe", "Retail / Smoke Shop", "Retail / Vape Shop", "Retail / Other", "Bar / Lounge", "Food Truck", or your best short description
-- notes: 1-2 sentences max. Include: franchise vs. independent, owner name if known, whether the business appears brand new or is an existing business filing a new DBA, any key detail useful for a POS salesperson making first contact.
-
-Business details:
-- Name: ${lead.name}
-- Address: ${lead.address}, ${lead.city}, ${lead.state} ${lead.zip}
-- County: ${lead.county}
-- Owner/Entity: ${lead.owner}
-- Sunbiz Filing Date: ${lead.fileDate}
-
-Search the web for this specific business at this specific address. Return ONLY a valid JSON object, no markdown, no explanation, no preamble.`;
-
-  const response = await fetch('/api/enrich', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt, model: 'claude-sonnet-4-6', max_tokens: 1024 })
-  });
-
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.error || `API error: ${response.status}`);
-  }
-
-  const data = await response.json();
-  if (!data.result) throw new Error('No result from server');
-  return JSON.parse(data.result);
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// ── CSV download ───────────────────────────────────────────
 function downloadCSV(region) {
   if (lastResults.length === 0) return;
 
   const filtered = region === 'all' ? lastResults : lastResults.filter(r => r.region === region);
-  if (filtered.length === 0) { alert(`No ${region} leads found.`); return; }
+  if (filtered.length === 0) {
+    alert(`No ${region} leads found.`);
+    return;
+  }
 
-  const hasEnrich = filtered.some(r => r.enriched);
-  let headers = ['FIC_Number','Business_Name','Region','County','Address','City','State','Zip','File_Date','Owner_Entity'];
-  if (hasEnrich) headers = [...headers, 'Phone','Website','Business_Type','Notes'];
-
-  const rows = filtered.map(r => {
-    const base = [r.fic, r.name, r.region, r.county, r.address, r.city, r.state, r.zip, r.fileDate, r.owner];
-    const extra = hasEnrich ? [r.phone||'', r.website||'', r.businessType||'', r.notes||''] : [];
-    return [...base, ...extra].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(',');
-  });
+  const headers = ['FIC_Number','Business_Name','Region','County','Address','City','State','Zip','File_Date','Owner_Entity'];
+  const rows = filtered.map(r => [
+    r.fic, r.name, r.region, r.county, r.address, r.city, r.state, r.zip, r.fileDate, r.owner
+  ].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
 
   const csv = [headers.join(','), ...rows].join('\r\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
+
   const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
   const suffix = region === 'all' ? 'ALL' : region;
   a.href = url;
