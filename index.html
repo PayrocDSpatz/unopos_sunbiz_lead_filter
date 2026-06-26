@@ -541,15 +541,21 @@ function parseLine(line, enabledCounties) {
   const zip      = line.slice(326, 331).trim();
   const fileDate = formatDate(line.slice(338, 346).trim());
 
+  const EXTRA_ZIPS = ['33306', '33308'];
+
   const matched = matchCounty(county, enabledCounties);
-  if (!matched) return null;
+  const zipMatch = EXTRA_ZIPS.includes(zip);
+  if (!matched && !zipMatch) return null;
   if (!isRestaurant(bizName)) return null;
+
+  const region = matched ? matched.region : 'SoFla';
+  const countyLabel = matched ? matched.label : 'Broward';
 
   return {
     fic: ficNum,
     name: bizName,
-    region: matched.region,
-    county: matched.label,
+    region,
+    county: countyLabel,
     address, city, state, zip, fileDate,
     owner: extractOwner(line),
   };
