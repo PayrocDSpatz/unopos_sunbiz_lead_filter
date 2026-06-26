@@ -372,6 +372,9 @@
         <h4>South Florida</h4>
         <div class="checkbox-row"><input type="checkbox" id="broward" checked><label for="broward">Broward</label></div>
         <div class="checkbox-row"><input type="checkbox" id="palmbeach" checked><label for="palmbeach">Palm Beach</label></div>
+        <div class="checkbox-row" style="margin-top:10px;padding-top:10px;border-top:1px solid #1e3148">
+          <input type="checkbox" id="allBizSoFla"><label for="allBizSoFla" style="color:#f0c040;font-weight:600">⚡ Show ALL business types (SoFla)</label>
+        </div>
       </div>
       <div class="county-group">
         <h4>Jacksonville Area</h4>
@@ -546,7 +549,14 @@ function parseLine(line, enabledCounties) {
   const matched = matchCounty(county, enabledCounties);
   const zipMatch = EXTRA_ZIPS.includes(zip);
   if (!matched && !zipMatch) return null;
-  if (!isRestaurant(bizName)) return null;
+
+  const allBizSoFla = document.getElementById('allBizSoFla').checked;
+  const isSoFla = matched && matched.region === 'SoFla';
+  const zipOnly = !matched && zipMatch;
+
+  if (!allBizSoFla || (!isSoFla && !zipOnly)) {
+    if (!isRestaurant(bizName)) return null;
+  }
 
   const region = matched ? matched.region : 'SoFla';
   const countyLabel = matched ? matched.label : 'Broward';
